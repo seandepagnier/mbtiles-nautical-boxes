@@ -1,0 +1,3 @@
+These simple utilities extract the cm93 chart cell bounding boxes
+for use with mapproxy-seed to retrieve charts from tile servers
+for harbors and passes around the world
