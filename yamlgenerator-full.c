@@ -16,7 +16,7 @@ int main(void)
     fprintf(c, "coverages:\n");
     fprintf(d, "caches:\n");
     while(getline(&line, &n, stdin) != EOF) {
-        int ret = sscanf(line, "cmcell %c%d.%d %lf %lf %lf %lf\n", &scale, &index, &id,
+        int ret = sscanf(line, "%c%d.%d %lf %lf %lf %lf\n", &scale, &index, &id,
                          &lat_min, &lon_min, &lat_max, &lon_max);
         free(line);
         line = 0;

@@ -17,29 +17,30 @@ int main(int argc, char **argv)
     double lat_min, lon_min, lat_max, lon_max;
     int ind = 0;
 
-    FILE *c = tmpfile(), *d = tmpfile();
+    FILE *c = tmpfile();
     printf("seeds:\n");
     printf("  level%d:\n", level);
-    printf("    caches: [level%d_mbtiles]\n", level);
+//    printf("    caches: [level%d_mbtiles]\n", level);
+    printf("    caches: [default]\n");
     printf("    coverages: [");
 
     fprintf(c, "coverages:\n");
-    fprintf(d, "caches:\n");
     while(getline(&line, &n, stdin) != EOF) {
-        int ret = sscanf(line, "cmcell %c%d.%d %lf %lf %lf %lf\n", &scale, &index, &id,
+        char n[1024];
+        int ret = sscanf(line, "%c%s %lf %lf %lf %lf\n", &scale, n,
                          &lat_min, &lon_min, &lat_max, &lon_max);
         free(line);
         line = 0;
 
-        if(ret != 7)
+        if(ret != 6)
             fprintf(stderr, "invalid line %d (%d): %s\n", ind, ret, line);
         else {
             char name[1024];
-            sprintf(name, "%d.%d%c", index, id, scale);
-            int l = 10 + scale - 'A';
+            sprintf(name, "%s%c", n, scale);
+//            int l = 10 + scale - 'A';
 
-            if(level != l)
-                continue;
+            //          if(level != l)
+//                continue;
 
             printf("%s_coverage,", name);
 
@@ -64,17 +65,4 @@ int main(int argc, char **argv)
     while((ch = fgetc(c)) != EOF)
         fputc(ch, stdout);
     printf("\n");
-
-    fprintf(d, "  level%d_mbtiles:\n", level);
-    fprintf(d, "    grids: [webmercator]\n");
-    fprintf(d, "    sources: [config_2_60.00]\n");
-    fprintf(d, "    cache:\n");
-    fprintf(d, "      type: mbtiles\n");
-    fprintf(d, "      filename: /home/sean/mbtiles/level%d.mbtiles\n", level);
-            
-    fseek(d, 0, SEEK_SET);
-    while((ch = fgetc(d)) != EOF)
-        fputc(ch, stderr);
-    printf("\n");
-
 }

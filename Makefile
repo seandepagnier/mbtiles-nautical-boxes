@@ -4,16 +4,28 @@
 ## License:     GPLv3+
 ##---------------------------------------------------------------------------
 
-all: seed-F.yaml config.yaml
+all: yamlgenerator nautical-15.yaml nautical-16.yaml nautical-17.yaml imagery-18.yaml config.yaml
+
+clean:
+	rm -f *yaml yamlgenerator
 
 yamlgenerator: yamlgenerator.c
 	gcc -o yamlgenerator yamlgenerator.c -g
 
-seed-F.yaml: yamlgenerator cm93boxes-F
-	./yamlgenerator 15 < cm93boxes-F > seed-F.yaml
+config.yaml: config.yaml.in
+	cp -f config.yaml.in config.yaml
 
-seed-G.yaml: yamlgenerator cm93boxes-G
-	./yamlgenerator 16 < cm93boxes-G > seed-G.yaml
+#%.yaml: boxes/% yamlgenerator
+#	./yamlgenerator 15 < $<  > $@
 
-clean:
-	rm -f seed.yaml yamlgenerator
+nautical-15.yaml: boxes/nautical-15 yamlgenerator
+	./yamlgenerator 15 < $< > $@
+
+nautical-16.yaml: boxes/nautical-16 yamlgenerator
+	./yamlgenerator 16 < $< > $@
+
+nautical-17.yaml: boxes/nautical-17 yamlgenerator
+	./yamlgenerator 17 < $< > $@
+
+imagery-18.yaml: boxes/imagery-18 yamlgenerator
+	./yamlgenerator 18 < $< > $@

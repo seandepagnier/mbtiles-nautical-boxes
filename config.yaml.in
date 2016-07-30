@@ -1,0 +1,41 @@
+services:
+  tms:
+    use_grid_names: true
+    # origin for /tiles service
+    origin: 'nw'
+  kml:
+      use_grid_names: true
+  wmts:
+  wms:
+    md:
+      title: MapProxy WMS Proxy
+      abstract: This is a minimal MapProxy example.
+
+layers:
+
+sources:
+  default:
+    type: tile
+#  Example reading from local file
+#    url: file:///home/sean/mbtiles/level16/%(tms_path)s.png
+#
+#  From remote tile server:
+#    url: https://a.tiles.mapbox.com/v3/pdgoodman.h0be0b5i/%(tms_path)s.png
+#
+    http:
+      ssl_no_cert_checks: true
+    grid: webmercator
+
+
+grids:
+    webmercator:
+        base: GLOBAL_WEBMERCATOR
+        srs: 'EPSG:3857'
+
+caches:
+  default:
+    grids: [webmercator]
+    sources: [default]
+    cache:
+      type: mbtiles
+      filename: mapproxy-seed-output.mbtiles
