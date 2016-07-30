@@ -65,4 +65,6 @@ int main(int argc, char **argv)
     while((ch = fgetc(c)) != EOF)
         fputc(ch, stdout);
     printf("\n");
+
+    return 0;
 }
