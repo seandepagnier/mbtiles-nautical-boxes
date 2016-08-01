@@ -2,6 +2,14 @@ These simple utilities extract the cm93 chart cell bounding boxes
 for use with mapproxy-seed to retrieve charts from tile servers
 for harbors around the world
 
-Example:
+==== Example ====
 
-edit config.yaml to give your tile to point to a tile server
+Edit mbtiles-nautical-boxes/config.yaml to select a tile server
+
+$ mapproxy-seed -s nautical-17.yaml -f config.yaml
+
+This program is a little buggy as it sometimes aborts, but
+also tends to "complete" without completing the database.
+Run it as many times as needed until it completes with 0 tiles fetched.
+
+$ cp mbtiles-nautical-boxes/cache_data/mapproxy-seed-output.mbtiles nautical-17.mbtiles
