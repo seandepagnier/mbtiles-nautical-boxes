@@ -10,7 +10,7 @@ clean:
 	rm -f *yaml yamlgenerator
 
 yamlgenerator: yamlgenerator.c
-	gcc -o yamlgenerator yamlgenerator.c -g
+	gcc -o yamlgenerator yamlgenerator.c -g -std=c99
 
 config.yaml: config.yaml.in
 	cp -f config.yaml.in config.yaml
